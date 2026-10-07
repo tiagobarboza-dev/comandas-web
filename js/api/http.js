@@ -1,6 +1,9 @@
-// Troque USE_MOCK para false quando o Spring Boot estiver rodando.
-export const USE_MOCK = false;
-export const API_URL = 'http://localhost:8080/api';
+// Detecta automaticamente o ambiente:
+// - Local (localhost/127.0.0.1) → backend local
+// - Online (Vercel)             → backend no Railway
+const API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+  ? 'http://localhost:8080/api'
+  : 'https://brasa-sal-api-production.up.railway.app/api';
 
 export async function http(path, { method = 'GET', body } = {}) {
   const res = await fetch(API_URL + path, {
